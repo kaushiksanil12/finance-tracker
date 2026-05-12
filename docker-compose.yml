@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: finance_backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    networks:
+      - shared
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: my-react-app
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
