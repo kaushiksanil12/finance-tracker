@@ -9,20 +9,17 @@ services:
     restart: unless-stopped
     env_file:
       - ./backend/.env
-    networks:
-      - shared
+    ports:
+      - "3000:3000"
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: my-react-app
+    container_name: finance_frontend
     restart: unless-stopped
     depends_on:
       - backend
-    networks:
-      - shared
-
-networks:
-  shared:
-    external: true
+    ports:
+      - "80:80"
+      - "443:443"
